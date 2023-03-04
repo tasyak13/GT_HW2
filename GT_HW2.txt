@@ -1,0 +1,100 @@
+//1
+
+create table goods (
+id int unique not null auto_increment,
+title varchar(255),
+quantity int check (quantity between 0 and 10)
+);
+
+insert into goods ( title, quantity) values( 'велосипед', 4);
+insert into goods ( title, quantity) values( 'лыжи',  5);
+insert into goods ( title, quantity) values( 'коньки',  7);
+insert into goods ( title, quantity) values( 'скейт', 2);
+
+alter table goods
+add price int;
+
+update goods
+set price = 0
+where id > 0;
+
+select * from goods;
+
+alter table goods
+modify column price numeric(8,2);
+
+update goods
+set price = 4.6
+where id = 1;
+
+update goods
+set price = 5.3
+where id = 2;
+
+update goods
+set price = 2.3
+where id = 3;
+
+update goods
+set price =8.7
+where id = 4;
+
+select * from goods;
+
+alter table goods
+modify column price int;
+
+select * from goods;
+
+alter table goods
+change price item_price int;
+
+alter table goods
+drop column item_price;
+
+create view v_goods as 
+select id, title, quantity from goods
+where quantity < 5;
+
+//2
+
+create table bachelors (
+name varchar(255) not null,
+lastname varchar(255) not null,
+avg_rate int check (avg_rate between 0 and 5),
+gender varchar(100) check (gender in ("M", "W"))
+);
+
+insert into bachelors values("Kirill", "Iashkov", 4, "M");
+insert into bachelors values("Anton", "Sushko", 3, "M");
+insert into bachelors values("Anna", "Balandina", 4, "W");
+insert into bachelors values("Petr", "Kochetkov", 3, "M");
+insert into bachelors values("Irina", "Kozhevnikova", 2, "W");
+
+select * from bachelors;
+
+alter table bachelors
+add id int primary key auto_increment;
+
+alter table bachelors
+modify column gender varchar(1);
+
+alter table bachelors
+change name firstname varchar(255);
+
+select * from bachelors
+where avg_rate >= 4;
+
+select * from bachelors
+where avg_rate between 2 and 3;
+
+select * from bachelors
+where gender = "W";
+
+create view v_bachelors as 
+select firstname, lastname, avg_rate, gender, id from bachelors
+where gender = "W";
+
+select * from v_bachelors;
+
+select distinct avg_rate from bachelors;
